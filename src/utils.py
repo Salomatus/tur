@@ -12,3 +12,4 @@ def open_read_json(file_path):
 
 if __name__ == "__main__":
     print(open_read_json(file_path))
+

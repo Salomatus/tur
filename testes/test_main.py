@@ -1,12 +1,14 @@
+import unittest
 from unittest import mock
 
 from src.main import Category, Product
+
 
 def test_add_product():
     category = Category("Фрукты", "Отечественные")
     product = Product.create_product("Яблоки", "Отечественные", 15.5, 55)
     category.add_product(product)
-    assert category.goods == ["Яблоки, 15.5 руб. Остаток: 55 шт.\n"]
+    assert category.goods == "Яблоки, 15.5 руб. Остаток: 55 шт.)"
 
 
 def test_change_price():
@@ -37,3 +39,16 @@ def test_cancel_price_change():
     with mock.patch("builtins.input", return_value="n"):
         product.price = 25000
     assert product.price == 30000
+
+
+class TestProduct(unittest.TestCase):
+    def test_add_method(self):
+        # Создаем два объекта Product
+        product1 = Product("Яблоки", "Отечественные", 15.5, 55)
+        product2 = Product("Телевизор", "4K Smart TV", 50000, 10)
+
+        # Вычисляем ожидаемый результат
+        expected_result = 15.5 * 55 + 50000 * 10
+
+        # Вызываем метод __add__ и проверяем, что результат совпадает с ожидаемым
+        self.assertEqual(product1 + product2, expected_result)

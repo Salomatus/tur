@@ -1,5 +1,5 @@
 class Category:
-    """Класс для категорий"""
+    """класс для категорий"""
 
     name: str
     description: str
@@ -19,19 +19,22 @@ class Category:
         Category.number_of_unique_products += 1
 
     def add_product(self, product):
-        """Метод для добавления товара в список товаров"""
+        """метод для добавления товара в список товаров"""
         self.__goods.append(product)
 
     @property
     def goods(self):
-        goods_info = []
-        for product in self.__goods:
-            goods_info.append(f"{product.name}, {product.price} руб. Остаток: {product.quantity} шт.\n")
-        return goods_info
+        return "\n".join(str(product) for product in self.__goods)
+
+    def __len__(self):
+        return sum(product.quantity for product in self.__goods)
+
+    def __str__(self):
+        return f"{self.name}, количество продуктов: {len(self)} шт."
 
 
 class Product:
-    """Касс для продуктов"""
+    """класс для продуктов"""
 
     name: str
     description: str
@@ -69,7 +72,7 @@ class Product:
 
     @price.setter
     def price(self, new_price):
-        """Сеттер для ценЫ"""
+        """Сеттер для цена"""
         if new_price <= 0:
             print("ценна введена некорректно")
         elif new_price < self.__price:
@@ -82,20 +85,33 @@ class Product:
         else:
             self.__price = new_price
 
+    def __str__(self):
+        return f"{self.name}, {self.__price} руб. Остаток: {self.quantity} шт.)"
+
+    def __add__(self, other):
+        result = self.__price * self.quantity + other.__price * other.quantity
+        return result
+
 
 # Создание объекта класса Category и добавление товаров:
 
-category = Category("Фрукты", "Отечественные")
+category_1 = Category("Фрукты", "Отечественные")
 product1 = Product.create_product("Яблоки", "Отечественные", 15.5, 55)
-category.add_product(product1)
-category = Category("Электроника", "Техника для дома")
+category_1.add_product(product1)
+
+category_2 = Category("Электроника", "Техника для дома")
 product2 = Product.create_product("Телевизор", "4K Smart TV", 50000, 10)
 product3 = Product.create_product("Смартфон", "Android", 30000, 5)
-category.add_product(product2)
-category.add_product(product3)
+category_2.add_product(product2)
+category_2.add_product(product3)
 
 # Вывод списка товаров категории:
-print(category.goods)
+print(category_1.goods)
+print(category_2.goods)
+
+# вывод количества остатка на складе
+print(category_2)
+print(category_1)
 
 # Изменение цены товара:
 product1.price = 45000
@@ -108,3 +124,7 @@ product3.price = 25000
 
 # Отмена понижения цены товара:
 product3.price = 35000
+
+# вывод общего остатка
+total_price = product3 + product2
+print(f"Общая сумма остатка {total_price}")
