@@ -1,5 +1,5 @@
 class Category:
-    """Класс для категорий"""
+    """класс для категорий"""
 
     name: str
     description: str
@@ -19,7 +19,7 @@ class Category:
         Category.number_of_unique_products += 1
 
     def add_product(self, product):
-        """Метод для добавления товара в список товаров"""
+        """метод для добавления товара в список товаров"""
         self.__goods.append(product)
 
     @property
@@ -34,7 +34,7 @@ class Category:
 
 
 class Product:
-    """Класс для продуктов"""
+    """класс для продуктов"""
 
     name: str
     description: str
@@ -67,12 +67,12 @@ class Product:
 
     @property
     def price(self):
-        """Геттер для цены"""
+        """Геттер для цена"""
         return self.__price
 
     @price.setter
     def price(self, new_price):
-        """Сеттер для цены"""
+        """Сеттер для цена"""
         if new_price <= 0:
             print("ценна введена некорректно")
         elif new_price < self.__price:
